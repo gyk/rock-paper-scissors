@@ -75,7 +75,7 @@ impl<'a, 'r> FromRequest<'a, 'r> for User {
                 cookies.get_private("user_id")) {
             let user_id = user_id_ck.value();
             let user_name = user_name_ck.value();
-            let mut sessions = SESSIONS.write().unwrap();
+            let sessions = SESSIONS.read().unwrap();
             if let Some(session) = sessions.get(user_id) {
                 if session.user_name == user_name {
                     maybe_user = Some(User {
@@ -95,14 +95,18 @@ impl<'f> FromForm<'f> for UserHand {
     type Error = ParseHandError;
 
     fn from_form(items: &mut FormItems<'f>, strict: bool) -> Result<UserHand, ParseHandError> {
+        let mut res = Err(ParseHandError);
         for (key, value) in items {
             if key == "hand" {
-                 return Ok(UserHand(Hand::from_str(value)?));
-            } else if strict{
-                break;
+                res = Ok(UserHand(Hand::from_str(value)?));
+                if !strict {
+                    return res;
+                }
+            } else if strict {
+                return Err(ParseHandError);
             }
         }
-        Err(ParseHandError)
+        res
     }
 }
 
@@ -139,7 +143,17 @@ fn login(mut cookies: Cookies, login: Form<Login>) -> Result<Redirect, Flash<Red
 
 #[post("/logout")]
 fn logout(mut cookies: Cookies) -> Flash<Redirect> {
+    cookies
+        .get_private("user_id")
+        .map(|cookie| {
+            let user_id = cookie.value();
+            let mut sessions = SESSIONS.write().unwrap();
+            sessions.remove(user_id);
+        });
+
+    cookies.remove_private(Cookie::named("user_name"));
     cookies.remove_private(Cookie::named("user_id"));
+
     Flash::success(Redirect::to("/login"), "Successfully logged out.")
 }
 
@@ -162,7 +176,7 @@ fn login_page(flash: Option<FlashMessage>) -> Template {
 #[get("/", rank = 1)]
 fn user_index(user: User) -> Template {
     let mut context = HashMap::new();
-    context.insert("user_id", user.name.clone());
+    context.insert("user_name", user.name.clone());
     reset_last_view(&mut context);
 
     let round = Round::random();

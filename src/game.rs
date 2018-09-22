@@ -6,7 +6,7 @@ use sha2::{Sha256, Digest};
 
 use util::{bytes_to_hex, gen_random_bytes};
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub enum Hand {
     Rock,
     Paper,
