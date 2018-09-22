@@ -1,0 +1,12 @@
+* {
+    font-family: "Palatino Linotype", Palatino, serif;
+}
+code {
+    font-family: Monaco, "Courier New", sans-serif;
+}
+body {
+    padding: 2%;
+}
+button {
+    font-size: 1.0em;
+}

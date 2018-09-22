@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Rock-Paper-Scissors</title>
+		<link type="text/css" rel="stylesheet" href="/styles/main.css" />
+	</head>
+	<body>
+		<h1>🚀 Rock-Paper-Scissors</h1>
+
+		{{#if flash}}
+			<p>Info: {{flash}}</p>
+		{{/if}}
+
+		<p>Please enter your name:</p>
+
+		<form action="/login" method="post" accept-charset="utf-8">
+			<input type="text" name="user_name" id="user_name" value="" />
+			<p><input type="submit" value="login"></p>
+		</form>
+	</body>
+</html>

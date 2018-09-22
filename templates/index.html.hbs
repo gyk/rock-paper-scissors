@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Rock-Paper-Scissors</title>
+        <link type="text/css" rel="stylesheet" href="/styles/main.css" />
+    </head>
+    <body>
+        <h1>🚀 Rock-Paper-Scissors</h1>
+        <p>Hello {{user_id}}. You are playing rock-paper-scissors against the computer.</p>
+        <p>
+            <strong>Scoreboard</strong>: Wins = {{win_count}}, Ties = {{tie_count}}, Losses = {{loss_count}}.<br/>
+            <strong>Last round</strong>: {{last_human}} (You)
+			&nbsp;<i>v.s.</i>&nbsp;
+			{{last_computer}} (Computer).<br/>
+			<strong>Result</strong>: {{last_result}}.<br/>
+			<br/>
+            You can verify this by running <code>echo -n {{last_random}}{{last_hand}} | shasum -a 256</code>,<br/>
+            and check whether the result does be <code>{{last_digest}}</code>.
+        </p>
+            <strong>This round</strong>, the computer has picked a shape by claiming <code>{{digest}}</code>.
+        </p>
+        <p>You pick:</p>
+        <p></p>
+        <form action="/" method="get">
+            <button type="submit" name="hand" value="rock">Rock ✊🏼</button>
+            <button type="submit" name="hand" value="paper">Paper ✋🏼</button>
+			<button type="submit" name="hand" value="scissors">Scissors ✌🏼</button>
+        </form>
+
+        <br/>
+        <br/>
+        <form action="/logout" method="post" accept-charset="utf-8">
+            <input type="submit" name="logout" id="logout" value="logout" />
+        </form>
+    </body>
+</html>
