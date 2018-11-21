@@ -10,3 +10,14 @@ body {
 button {
     font-size: 1.0em;
 }
+a {
+    color: #6495ed;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+footer, footer a {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.95em;
+}
